@@ -75,3 +75,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Pinned scroll scenes: --p is 0..1 progress through the scene, the active step follows it
+const scenes = document.querySelectorAll('.scroll-scene');
+const siteHeader = document.querySelector('.site-header');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let sceneQueued = false;
+
+function updateScenes() {
+  sceneQueued = false;
+  document.documentElement.style.setProperty('--header-h', siteHeader.offsetHeight + 'px');
+  scenes.forEach(scene => {
+    const r = scene.getBoundingClientRect();
+    const p = reduceMotion.matches ? 1 : Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+    scene.style.setProperty('--p', p.toFixed(4));
+    const steps = scene.querySelectorAll('.scene-step');
+    const active = Math.min(steps.length - 1, Math.floor(p * steps.length));
+    steps.forEach((s, i) => s.classList.toggle('is-active', i === active));
+  });
+}
+
+addEventListener('scroll', () => {
+  if (!sceneQueued) { sceneQueued = true; requestAnimationFrame(updateScenes); }
+}, { passive: true });
+addEventListener('resize', updateScenes);
+updateScenes();
