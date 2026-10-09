@@ -179,6 +179,11 @@ button, input, select {
   color: var(--text-main);
 }
 
+.logo-img {
+  height: 3.25rem;
+  width: auto;
+}
+
 .logo-mark {
   display: inline-flex;
   align-items: center;
