@@ -19,13 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       const chosenPack = e.target.getAttribute('data-pack');
       if (packSelect && chosenPack) {
-        // Find matching option
-        for (let i = 0; i < packSelect.options.length; i++) {
-          if (packSelect.options[i].text.includes(chosenPack.split(' ')[0])) {
-            packSelect.selectedIndex = i;
-            break;
-          }
-        }
+        packSelect.value = chosenPack;
       }
 
       if (inquiryBox) {
@@ -47,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inquiryBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         const feedback = document.getElementById('form-feedback');
         if (feedback && flavor) {
-          feedback.textContent = `Selected flavor note: ${flavor}. Enter your details below to request a pack.`;
+          feedback.textContent = t('Selected flavor note: {flavor}. Enter your details below to request a pack.', { flavor: t(flavor) });
           feedback.className = 'form-feedback';
         }
       }
@@ -63,16 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
-      const pack = document.getElementById('pack-choice').value;
+      const pack = packSelect.selectedOptions[0].text;
 
       if (!name || !contact) {
-        feedback.textContent = 'Please provide both your name and phone/email.';
+        feedback.textContent = t('Please provide both your name and phone/email.');
         feedback.className = 'form-feedback';
         return;
       }
 
       // Simulate instantaneous order reservation
-      feedback.textContent = `Thank you, ${name}! Your request for ${pack} has been logged. We'll contact ${contact} within 24 hours.`;
+      feedback.textContent = t("Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact} within 24 hours.", { name, pack, contact });
       feedback.className = 'form-feedback success';
 
       // Clear input fields

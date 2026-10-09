@@ -52,8 +52,11 @@
       </nav>
 
       <div class="header-actions">
-        <a href="#order" class="btn btn-secondary btn-sm">Find in Stores</a>
-        <a href="#flavours" class="btn btn-primary btn-sm">Taste The Crunch</a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ms">MY</button>
+          <button type="button" data-lang="zh">CN</button>
+        </div>
       </div>
     </div>
   </header>
@@ -82,7 +85,7 @@
             <div class="meta-divider"></div>
             <div class="meta-item">
               <span class="meta-label">Standard Bag</span>
-              <strong class="meta-value">$3.99 <span class="meta-unit">/ 150g (5.3 oz)</span></strong>
+              <strong class="meta-value">RM3.99 <span class="meta-unit">/ 150g</span></strong>
             </div>
             <div class="meta-divider"></div>
             <div class="meta-item">
@@ -124,7 +127,7 @@
                   <circle cx="125" cy="188" r="1.5" fill="#78350F" opacity="0.6"/>
                   
                   <rect x="50" y="248" width="130" height="24" rx="3" fill="#5E1800"/>
-                  <text x="115" y="264" fill="#F7EEDD" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">$3.99 • 150G</text>
+                  <text x="115" y="264" fill="#F7EEDD" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">RM3.99 • 150G</text>
                 </g>
 
                 <!-- Pack 2: Cheese -->
@@ -143,7 +146,7 @@
                   <circle cx="128" cy="202" r="1.5" fill="#78350F" opacity="0.4"/>
                   
                   <rect x="50" y="248" width="130" height="24" rx="3" fill="#8A5600"/>
-                  <text x="115" y="264" fill="#FFFBEB" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">$3.99 • 150G</text>
+                  <text x="115" y="264" fill="#FFFBEB" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">RM3.99 • 150G</text>
                 </g>
               </svg>
             </div>
@@ -171,7 +174,7 @@
           <article class="flavour-card bbq-theme">
             <div class="flavour-card-header">
               <div class="flavour-badge">Profile No. 01</div>
-              <div class="flavour-price-tag">$3.99 <small>/ 150g</small></div>
+              <div class="flavour-price-tag">RM3.99 <small>/ 150g</small></div>
             </div>
 
             <div class="flavour-card-body">
@@ -213,7 +216,7 @@
           <article class="flavour-card cheese-theme">
             <div class="flavour-card-header">
               <div class="flavour-badge">Profile No. 02</div>
-              <div class="flavour-price-tag">$3.99 <small>/ 150g</small></div>
+              <div class="flavour-price-tag">RM3.99 <small>/ 150g</small></div>
             </div>
 
             <div class="flavour-card-body">
@@ -353,7 +356,7 @@
             <div class="pack-tag">Retail Single</div>
             <h3 class="pack-title">The Single Bag</h3>
             <div class="pack-price">
-              <span class="currency">$</span>3<span class="cents">.99</span>
+              <span class="currency">RM</span>3<span class="cents">.99</span>
               <span class="pack-unit">/ 150g bag</span>
             </div>
             <p class="pack-desc">Ideal for lunch boxes, desk drawer emergencies, or an honest movie evening.</p>
@@ -362,7 +365,7 @@
               <li>Re-sealable freshness zipper</li>
               <li>Calculated local shipping</li>
             </ul>
-            <button type="button" class="btn btn-secondary pack-btn" data-pack="Single Bag ($3.99)">Select Single</button>
+            <button type="button" class="btn btn-secondary pack-btn" data-pack="Single Bag (RM3.99)">Select Single</button>
           </div>
 
           <!-- Pack Option 2: The Duo Sampler (Featured) -->
@@ -371,16 +374,16 @@
             <div class="pack-tag">The Best of Both</div>
             <h3 class="pack-title">Tasting Duo Sampler</h3>
             <div class="pack-price">
-              <span class="currency">$</span>10<span class="cents">.99</span>
+              <span class="currency">RM</span>10<span class="cents">.99</span>
               <span class="pack-unit">/ 3-Bag Sampler</span>
             </div>
             <p class="pack-desc">Two bags of your primary craving + one bag of the companion flavor. No compromises.</p>
             <ul class="pack-features">
               <li>2x Smoky BBQ + 1x Aged Cheddar (or swapped)</li>
               <li>Free kettle sticker pack included</li>
-              <li>Saves $0.98 compared to singles</li>
+              <li>Saves RM0.98 compared to singles</li>
             </ul>
-            <button type="button" class="btn btn-primary pack-btn" data-pack="Tasting Duo Sampler ($10.99)">Order Duo Sampler</button>
+            <button type="button" class="btn btn-primary pack-btn" data-pack="Duo Sampler (RM10.99)">Order Duo Sampler</button>
           </div>
 
           <!-- Pack Option 3: Party Crate -->
@@ -388,16 +391,16 @@
             <div class="pack-tag">Wholesale &amp; Pantry</div>
             <h3 class="pack-title">The Party Crate</h3>
             <div class="pack-price">
-              <span class="currency">$</span>27<span class="cents">.99</span>
+              <span class="currency">RM</span>27<span class="cents">.99</span>
               <span class="pack-unit">/ 8 Bags Total</span>
             </div>
             <p class="pack-desc">For game days, office pantries, and households with serious snack standards.</p>
             <ul class="pack-features">
               <li>4x Smoky BBQ + 4x Aged Cheddar</li>
               <li>Includes Priority Shipping nationwide</li>
-              <li>Best value per gram ($3.50 / bag)</li>
+              <li>Best value per gram (RM3.50 / bag)</li>
             </ul>
-            <button type="button" class="btn btn-secondary pack-btn" data-pack="Party Crate ($27.99)">Stock The Pantry</button>
+            <button type="button" class="btn btn-secondary pack-btn" data-pack="Party Crate (RM27.99)">Stock The Pantry</button>
           </div>
         </div>
 
@@ -420,9 +423,9 @@
                 <div class="form-group">
                   <label for="pack-choice">Selected Package</label>
                   <select id="pack-choice">
-                    <option value="Duo Sampler ($10.99)">Tasting Duo Sampler ($10.99)</option>
-                    <option value="Single Bag ($3.99)">Single Bag ($3.99)</option>
-                    <option value="Party Crate ($27.99)">Party Crate ($27.99)</option>
+                    <option value="Duo Sampler (RM10.99)">Tasting Duo Sampler (RM10.99)</option>
+                    <option value="Single Bag (RM3.99)">Single Bag (RM3.99)</option>
+                    <option value="Party Crate (RM27.99)">Party Crate (RM27.99)</option>
                     <option value="Wholesale Case (Custom)">Wholesale Inquiry (50+ bags)</option>
                   </select>
                 </div>
@@ -505,9 +508,9 @@
         <div class="footer-nav-col">
           <h5 class="footer-heading">Purchasing</h5>
           <ul class="footer-links">
-            <li><a href="#order">Single Pack ($3.99)</a></li>
-            <li><a href="#order">Duo Sampler ($10.99)</a></li>
-            <li><a href="#order">Party Crate ($27.99)</a></li>
+            <li><a href="#order">Single Pack (RM3.99)</a></li>
+            <li><a href="#order">Duo Sampler (RM10.99)</a></li>
+            <li><a href="#order">Party Crate (RM27.99)</a></li>
             <li><a href="#contact">Wholesale Retailers</a></li>
           </ul>
         </div>
@@ -536,6 +539,7 @@
     </div>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
