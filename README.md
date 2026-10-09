@@ -29,3 +29,7 @@ Open `index.html` directly in any web browser, or serve locally:
 ```bash
 python -m http.server 8000 --directory /home/afterlight/krunchiesnack
 ```
+
+## Deploying changes
+
+The site is served with a 4-hour browser cache. When `style.css`, `app.js` or `i18n.js` changes, bump its `?v=` number in `index.html`, or returning visitors get the new HTML with the old CSS/JS.
