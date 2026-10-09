@@ -1,5 +1,7 @@
 # KrunchieSnack Website
 
+> i have no affiliation with this website, i as a programmer is just helping a friend built this for their uni project
+
 A dedicated web presence for **KrunchieSnack**, an artisanal small-batch kettle crisp snack company.
 
 ## Design Philosophy & Constraints
