@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Krunchie Snacks</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Krunchie Snacks Homepage">
+        <img src="assets/logo.webp" alt="Krunchie Snacks" class="logo-img" width="480" height="188">
+      </a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html#flavours" class="nav-link">Shop</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="checkout.html" class="cart-btn" aria-label="Cart">Cart <span class="cart-count" data-cart-count hidden>0</span></a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ms">MY</button>
+          <button type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="site-container">
+      <h1 class="page-title">Checkout</h1>
+      <p class="test-banner">Testing mode: prices, delivery and payment are placeholders, no real payment is taken.</p>
+      <div class="checkout-grid">
+        <form id="checkout-form" class="checkout-form" novalidate>
+          <h2 class="panel-title">Your details</h2>
+          <div class="form-group"><label for="f-name">Your Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="form-group"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+60 12-345 6789" required></div>
+          <div class="form-group"><label for="f-email">Email (optional)</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+
+          <h2 class="panel-title">Delivery</h2>
+          <div id="delivery-options" class="choice-list"></div>
+          <div class="form-group" id="address-group"><label for="f-address">Delivery address</label><textarea id="f-address" name="address" rows="3" autocomplete="street-address"></textarea></div>
+
+          <h2 class="panel-title">Payment</h2>
+          <div id="payment-options" class="choice-list"></div>
+
+          <div class="form-group"><label for="f-notes">Notes (optional)</label><textarea id="f-notes" name="notes" rows="2"></textarea></div>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite"></div>
+          <button type="submit" id="place-order" class="btn btn-primary">Place order</button>
+        </form>
+
+        <aside class="summary-panel">
+          <h2 class="panel-title">Order summary</h2>
+          <div id="summary-lines" class="drawer-lines"></div>
+          <dl class="totals">
+            <div><dt>Subtotal</dt><dd id="t-sub">RM0.00</dd></div>
+            <div><dt>Delivery</dt><dd id="t-fee">RM0.00</dd></div>
+            <div class="grand"><dt>Total</dt><dd id="t-total">RM0.00</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </main>
+  <script src="i18n.js?v=7"></script>
+  <script src="shop.js?v=1"></script>
+  <script>
+    (async () => {
+      const $ = (id) => document.getElementById(id);
+      let cat;
+      try { cat = await loadCatalog(); } catch { $('form-feedback').textContent = tr('Could not load products. Please try again later.'); return; }
+      const radios = (box, name, items, label) => {
+        box.replaceChildren(...items.map((it, i) => {
+          const r = el('input', { type: 'radio', name, value: it.id, checked: i === 0 });
+          r.addEventListener('change', draw);
+          return el('label', { className: 'choice' }, r, el('span', {}, label(it)));
+        }));
+      };
+      const drawChoices = () => {
+        const d = document.querySelector('[name=delivery]:checked')?.value, p = document.querySelector('[name=payment]:checked')?.value;
+        radios($('delivery-options'), 'delivery', cat.delivery, (x) => tr(x.name) + (x.fee ? ' (' + rm(x.fee) + ')' : ''));
+        radios($('payment-options'), 'payment', cat.payment, (x) => tr(x.name));
+        if (d) document.querySelector(`[name=delivery][value=${d}]`).checked = true;
+        if (p) document.querySelector(`[name=payment][value=${p}]`).checked = true;
+      };
+      function draw() {
+        const lines = cartLines(cat);
+        renderLines($('summary-lines'), lines);
+        const d = cat.delivery.find((x) => x.id === document.querySelector('[name=delivery]:checked')?.value) || cat.delivery[0];
+        const sub = subtotalOf(lines), fee = lines.length ? d.fee : 0;
+        $('t-sub').textContent = rm(sub); $('t-fee').textContent = rm(fee); $('t-total').textContent = rm(sub + fee);
+        $('address-group').hidden = !d.needsAddress;
+        $('place-order').disabled = !lines.length;
+      }
+      drawChoices(); draw();
+      document.addEventListener('cartchange', draw);
+      document.addEventListener('langchange', () => { drawChoices(); draw(); });
+
+      $('checkout-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const f = e.target, fb = $('form-feedback'), btn = $('place-order');
+        const body = {
+          name: f.name.value, phone: f.phone.value, email: f.email.value, address: f.address.value, notes: f.notes.value,
+          delivery: f.delivery.value, payment: f.payment.value, website: f.website.value,
+          items: cartLines(cat).map((l) => ({ id: l.id, qty: l.qty })),
+        };
+        btn.disabled = true; fb.className = 'form-feedback'; fb.textContent = '';
+        try {
+          const res = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) { fb.textContent = tr(data.error || 'Something went wrong. Please try again.'); btn.disabled = false; return; }
+          Cart.clear();
+          location.href = 'order.html?id=' + encodeURIComponent(data.id);
+        } catch {
+          fb.textContent = tr('Something went wrong. Please try again.');
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

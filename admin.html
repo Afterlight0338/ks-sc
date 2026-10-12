@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Krunchie Snacks</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Krunchie Snacks Homepage">
+        <img src="assets/logo.webp" alt="Krunchie Snacks" class="logo-img" width="480" height="188">
+      </a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html#flavours" class="nav-link">Shop</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="checkout.html" class="cart-btn" aria-label="Cart">Cart <span class="cart-count" data-cart-count hidden>0</span></a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ms">MY</button>
+          <button type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="site-container">
+      <h1 class="page-title">Orders (admin)</h1>
+      <form id="login" class="inline-form">
+        <input type="password" id="pw" placeholder="Admin password" autocomplete="current-password" required>
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <span id="msg" class="form-feedback" role="alert"></span>
+      </form>
+      <div id="orders"></div>
+    </div>
+  </main>
+  <script src="shop.js?v=1"></script>
+  <script>
+    const STATUSES = ['new', 'paid', 'shipped', 'cancelled'];
+    const KEY = 'ks-admin';
+    let pw = '';
+    try { pw = sessionStorage.getItem(KEY) || ''; } catch {}
+    const msg = document.getElementById('msg');
+    const api = (path, opts = {}) => fetch(path, { ...opts, headers: { Authorization: 'Bearer ' + pw, 'Content-Type': 'application/json' } });
+
+    async function load() {
+      const res = await api('/api/admin/orders');
+      if (!res.ok) { msg.textContent = res.status === 401 ? 'Wrong password' : 'Error ' + res.status; document.getElementById('orders').replaceChildren(); return; }
+      msg.textContent = '';
+      const { orders } = await res.json();
+      document.getElementById('login').hidden = true;
+      const box = document.getElementById('orders');
+      if (!orders.length) { box.replaceChildren(el('p', {}, 'No orders yet.')); return; }
+      box.replaceChildren(...orders.map((o) => {
+        const sel = el('select', {}, ...STATUSES.map((s) => el('option', { value: s, selected: s === o.status }, s)));
+        sel.addEventListener('change', async () => { await api('/api/admin/orders/' + o.id, { method: 'POST', body: JSON.stringify({ status: sel.value }) }); load(); });
+        return el('article', { className: 'admin-order status-' + o.status },
+          el('header', {}, el('strong', {}, o.id), el('span', {}, new Date(o.created).toLocaleString()), sel),
+          el('p', {}, `${o.name} · ${o.phone}${o.email ? ' · ' + o.email : ''}`),
+          el('p', {}, `${o.delivery}${o.address ? ': ' + o.address : ''} · ${o.payment}`),
+          o.notes ? el('p', {}, 'Notes: ' + o.notes) : '',
+          el('ul', {}, ...o.items.map((l) => el('li', {}, `${l.qty} × ${l.name} (${rm(l.price)})`))),
+          el('p', {}, el('strong', {}, `Total ${rm(o.total)}`)));
+      }));
+    }
+    document.getElementById('login').addEventListener('submit', (e) => {
+      e.preventDefault();
+      pw = document.getElementById('pw').value;
+      try { sessionStorage.setItem(KEY, pw); } catch {}
+      load();
+    });
+    if (pw) load();
+  </script>
+</body>
+</html>

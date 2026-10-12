@@ -3,8 +3,16 @@ main = "index.js"
 compatibility_date = "2026-10-01"
 account_id = "b4b16a969b4e57fb4b1c81e6504e2018"
 workers_dev = false
-routes = [{ pattern = "krunchiesnack.vivlos.dev/api/order", zone_name = "vivlos.dev" }]
+routes = [{ pattern = "krunchiesnack.vivlos.dev/api/*", zone_name = "vivlos.dev" }]
 
 [[send_email]]
 name = "MAIL"
 destination_address = "krunchiesnacks@gmail.com"
+
+# Create with: npx wrangler d1 create krunchie-orders, then paste the id here
+[[d1_databases]]
+binding = "DB"
+database_name = "krunchie-orders"
+database_id = "REPLACE_ME"
+
+# Admin password: npx wrangler secret put ADMIN_PASSWORD

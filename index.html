@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
-<body>
+<body data-drawer>
   <header class="site-header">
     <div class="site-container header-inner">
       <a href="#" class="brand-logo" aria-label="Krunchie Snacks Homepage">
@@ -31,13 +31,13 @@
 
       <nav class="site-nav" aria-label="Main Navigation">
         <ul class="nav-list">
-          <li><a href="#flavours" class="nav-link">Flavours</a></li>
-          <li><a href="#order" class="nav-link">Order</a></li>
+          <li><a href="#flavours" class="nav-link">Shop</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
+        <a href="checkout.html" class="cart-btn" data-open-cart aria-label="Cart">Cart <span class="cart-count" data-cart-count hidden>0</span></a>
         <div class="lang-switch" role="group" aria-label="Language">
           <button type="button" data-lang="en">EN</button>
           <button type="button" data-lang="ms">MY</button>
@@ -57,7 +57,7 @@
           <p class="hero-tagline">Placeholder</p>
 
           <div class="hero-cta-group">
-            <a href="#flavours" class="btn btn-primary">See The Flavours</a>
+            <a href="#flavours" class="btn btn-primary">Shop Now</a>
           </div>
         </div>
 
@@ -104,74 +104,12 @@
     <section id="flavours" class="flavours-section" aria-labelledby="flavours-title">
       <div class="site-container">
         <header class="section-intro">
-          <span class="section-kicker">Flavours</span>
+          <span class="section-kicker">Shop</span>
           <h2 id="flavours-title" class="section-title">BBQ or Cheese.</h2>
+          <p class="section-sub">Prices are for testing only.</p>
         </header>
 
-        <div class="flavours-grid">
-          <article class="flavour-card bbq-theme">
-            <div class="flavour-card-body">
-              <h3 class="flavour-name">BBQ</h3>
-              <p class="flavour-subhead">Placeholder</p>
-              <div class="card-action">
-                <a href="#order" class="btn btn-outline flavour-select-btn" data-flavor="BBQ">Select BBQ</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="flavour-card cheese-theme">
-            <div class="flavour-card-body">
-              <h3 class="flavour-name">Cheese</h3>
-              <p class="flavour-subhead">Placeholder</p>
-              <div class="card-action">
-                <a href="#order" class="btn btn-outline flavour-select-btn" data-flavor="Cheese">Select Cheese</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="order" class="order-section" aria-labelledby="order-title">
-      <div class="site-container">
-        <header class="section-intro">
-          <span class="section-kicker">Order</span>
-          <h2 id="order-title" class="section-title">Place an order.</h2>
-          <p class="section-sub">Placeholder</p>
-        </header>
-
-        <div class="order-inquiry-box">
-          <div class="inquiry-content">
-            <h4 class="inquiry-title">Interested in Krunchie Snacks?</h4>
-            <p class="inquiry-sub">Pick a flavour and leave your details below.</p>
-
-            <form id="order-form" class="inquiry-form" onsubmit="return false;">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="customer-name">Your Name</label>
-                  <input type="text" id="customer-name" placeholder="Your name" required>
-                </div>
-                <div class="form-group">
-                  <label for="customer-contact">Phone or Email</label>
-                  <input type="text" id="customer-contact" placeholder="Phone or email" required>
-                </div>
-                <div class="form-group">
-                  <label for="pack-choice">Flavour</label>
-                  <select id="pack-choice">
-                    <option value="BBQ">BBQ</option>
-                    <option value="Cheese">Cheese</option>
-                  </select>
-                </div>
-                <div class="form-group form-submit-col">
-                  <label>&nbsp;</label>
-                  <button type="submit" id="submit-inquiry" class="btn btn-primary">Send Order Request</button>
-                </div>
-              </div>
-              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-              <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite"></div>
-            </form>
-          </div>
-        </div>
+        <div class="flavours-grid" id="product-grid" aria-live="polite"></div>
       </div>
     </section>
 
@@ -236,7 +174,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=6"></script>
-  <script src="app.js?v=5"></script>
+  <script src="i18n.js?v=7"></script>
+  <script src="shop.js?v=1"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
