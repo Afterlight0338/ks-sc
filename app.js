@@ -37,11 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
   flavorButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       const flavor = e.target.getAttribute('data-flavor');
+      if (packSelect && flavor) packSelect.value = flavor;
       if (inquiryBox) {
         inquiryBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         const feedback = document.getElementById('form-feedback');
         if (feedback && flavor) {
-          feedback.textContent = t('Selected flavor note: {flavor}. Enter your details below to request a pack.', { flavor: t(flavor) });
+          feedback.textContent = t('Selected flavor note: {flavor}. Enter your details below to order.', { flavor: t(flavor) });
           feedback.className = 'form-feedback';
         }
       }
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Simulate instantaneous order reservation
-      feedback.textContent = t("Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact} within 24 hours.", { name, pack, contact });
+      feedback.textContent = t("Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact}.", { name, pack, contact });
       feedback.className = 'form-feedback success';
 
       // Clear input fields
