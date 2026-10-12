@@ -33,7 +33,7 @@ const I18N = {
   'Send Order Request': ['Hantar Permintaan Pesanan', '提交订购请求'],
   'Phone': ['Telefon', '电话'],
   'Official Socials': ['Media Sosial Rasmi', '官方社交媒体'],
-  'Email & Address': ['E-mel & Alamat', '电邮与地址'],
+  'Email': ['E-mel', '电邮'],
   'Connect': ['Hubungi', '联系我们'],
   '"One bite, big delight"': ['"Satu gigitan, kegembiraan besar"', '“一口，大满足”'],
   'Krunchie Snacks. All rights reserved.': ['Krunchie Snacks. Hak cipta terpelihara.', 'Krunchie Snacks 版权所有。'],
