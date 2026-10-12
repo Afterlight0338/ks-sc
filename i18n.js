@@ -39,6 +39,7 @@ const I18N = {
   'Krunchie Snacks. All rights reserved.': ['Krunchie Snacks. Hak cipta terpelihara.', 'Krunchie Snacks 版权所有。'],
 
   // Messages from app.js
+  'Could not send your request. Please try again or contact us directly.': ['Permintaan tidak dapat dihantar. Sila cuba lagi atau hubungi kami terus.', '无法发送你的请求。请重试或直接联系我们。'],
   'Selected flavor note: {flavor}. Enter your details below to order.': ['Perisa dipilih: {flavor}. Isi butiran anda di bawah untuk memesan.', '已选口味：{flavor}。请在下方填写资料以订购。'],
   'Please provide both your name and phone/email.': ['Sila isi nama dan telefon/e-mel anda.', '请填写你的名字和电话/电邮。'],
   "Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact} within 24 hours.": ['Terima kasih, {name}! Permintaan anda untuk {pack} telah direkodkan. Kami akan menghubungi {contact}.', '谢谢你，{name}！你的 {pack} 订购请求已记录。我们会联系 {contact}。'],

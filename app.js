@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const feedback = document.getElementById('form-feedback');
   
   if (orderForm) {
-    orderForm.addEventListener('submit', (e) => {
+    orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -66,13 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Simulate instantaneous order reservation
-      feedback.textContent = t("Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact}.", { name, pack, contact });
-      feedback.className = 'form-feedback success';
-
-      // Clear input fields
-      document.getElementById('customer-name').value = '';
-      document.getElementById('customer-contact').value = '';
+      const btn = document.getElementById('submit-inquiry');
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, contact, flavour: packSelect.value, website: orderForm.website.value }),
+        });
+        if (!res.ok) throw new Error(res.status);
+        feedback.textContent = t("Thank you, {name}! Your request for {pack} has been logged. We'll contact {contact}.", { name, pack, contact });
+        feedback.className = 'form-feedback success';
+        orderForm.reset();
+      } catch (err) {
+        feedback.textContent = t('Could not send your request. Please try again or contact us directly.');
+        feedback.className = 'form-feedback';
+      } finally {
+        btn.disabled = false;
+      }
     });
   }
 });
