@@ -9,10 +9,9 @@ routes = [{ pattern = "krunchiesnack.vivlos.dev/api/*", zone_name = "vivlos.dev"
 name = "MAIL"
 destination_address = "krunchiesnacks@gmail.com"
 
-# Create with: npx wrangler d1 create krunchie-orders, then paste the id here
 [[d1_databases]]
 binding = "DB"
 database_name = "krunchie-orders"
-database_id = "REPLACE_ME"
+database_id = "277311b5-85a7-4291-b4d8-06518bd19796"
 
 # Admin password: npx wrangler secret put ADMIN_PASSWORD
