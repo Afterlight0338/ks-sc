@@ -1,0 +1,10 @@
+name = "krunchie-orders"
+main = "index.js"
+compatibility_date = "2026-10-01"
+account_id = "b4b16a969b4e57fb4b1c81e6504e2018"
+workers_dev = false
+routes = [{ pattern = "krunchiesnack.vivlos.dev/api/order", zone_name = "vivlos.dev" }]
+
+[[send_email]]
+name = "MAIL"
+destination_address = "krunchiesnacks@gmail.com"
